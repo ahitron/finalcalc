@@ -47,48 +47,48 @@ function App() {
       )
 
   const renderWaitingCard = () =>
-    haveValidGrades ? null : (
-      <div className="card mb-1 border-danger" id="waitingCard">
-        <div className="card-body">
-          <h5 className="card-title text-center">Waiting for all marking period grades to be entered...</h5>
-        </div>
+    <div className="card mb-1 border-danger" id="waitingCard">
+      <div className="card-body">
+        <h5 className="card-title text-center">Waiting for all marking period grades to be entered...</h5>
       </div>
-    )
+    </div>
 
-  console.log(data)
+
+  const renderResults = () => {
+    const { noFinal, possibilities } = data
+    console.log(noFinal)
+    console.log(possibilities)
+    return (
+      <>
+        <div className="card mb-1">
+          <div className="card-body">
+            {/* <h5 className="card-title text-center">Average with no final exam</h5> */}
+            <div className="card-text">
+              If you do not take a final, your grade will be {noFinal.letter}.
+            </div>
+          </div>
+        </div>
+        {
+          possibilities.map(x => (
+            <div key={x.letter} className="card mb-1">
+              <div className="card-body">
+                <div className="card-text">
+                  If you score between {x.min} and {x.max} on the final, your grade will be {x.letter}.
+                </div>
+              </div>
+            </div>
+          ))}
+      </>
+    )
+  }
+
   return (
     <div className="container mt-3" style={{ 'maxWidth': '550px' }}>
       {renderOptions()}
       <hr />
       <h5 className="text-center mb-3">Enter marking period grades</h5>
       {renderInputs()}
-      {renderWaitingCard()}
-      <div className="card mb-1" id="avgCard">
-        <div className="card-body">
-          <h5 className="card-title text-center">Average with no final exam</h5>
-          <div className="card-text">
-            <h3 id="avg" className="text-center"></h3>
-          </div>
-        </div>
-      </div>
-      <div className="card mb-1" id="avg0Card">
-        <div className="card-body">
-          <h5 className="card-title text-center">Average with 0% on final exam</h5>
-          <div className="card-text">
-            <h3 id="avg0" className="text-center"></h3>
-            <p className="text-center">Completing the final exam <b id="effect0"></b> lower your letter grade.</p>
-          </div>
-        </div>
-      </div>
-      <div className="card mb-1" id="avg100Card">
-        <div className="card-body">
-          <h5 className="card-title text-center">Average with 100% on final exam</h5>
-          <div className="card-text">
-            <h3 id="avg100" className="text-center"></h3>
-            <p className="text-center">Completing the final exam <b id="effect100"></b> raise your letter grade.</p>
-          </div>
-        </div>
-      </div>
+      {haveValidGrades ? renderResults() : renderWaitingCard()}
     </div>
   );
 }
