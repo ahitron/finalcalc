@@ -12,6 +12,8 @@ function App() {
   const updateGrade = (idx, grade) => {
     const temp = [...grades]
     const num = parseInt(grade)
+    if (num > 100) num = 100
+    if (num < 0) num = 0
     temp[idx] = Number.isFinite(num) ? num : ''
     setGrades(temp)
   }
