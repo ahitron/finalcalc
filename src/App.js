@@ -115,9 +115,9 @@ function App() {
     <div className="container mt-3" style={{ 'maxWidth': '550px' }}>
       {renderOptions()}
       <hr />
-      <h6 className="text-center mb-3">Enter your marking period grades</h6>
+      <h6 className="text-center mb-3">ENTER YOUR MARKING PERIOD GRADES</h6>
       {renderInputs()}
-      <h6 className="text-center mb-3 mt-3">Results</h6>
+      <h6 className="text-center mb-3 mt-3">RESULTS</h6>
       {haveValidGrades ? renderResultsCard() : renderWaitingCard()}
     </div>
   )
