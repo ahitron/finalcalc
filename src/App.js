@@ -20,7 +20,7 @@ function App() {
   const renderOptions = () => {
     if (numPeriods === 4)
       return <>
-        <span onClick={() => setNumPeriods(2)}>Semester</span>
+        <span onClick={() => setNumPeriods(2)} style={{ 'cursor': 'pointer' }}>Semester</span>
         <span> | </span>
         <b>Full Year</b>
       </>
@@ -28,7 +28,7 @@ function App() {
       return <>
         <b>Semester</b>
         <span> | </span>
-        <span onClick={() => setNumPeriods(4)}>Full Year</span>
+        <span onClick={() => setNumPeriods(4)} style={{ 'cursor': 'pointer' }}>Full Year</span>
       </>
   }
 
