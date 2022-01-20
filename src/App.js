@@ -82,7 +82,7 @@ function App() {
               possibilities.map(x => (
                 <tr key={x.letter}>
                   <td>
-                    {x.min}&ndash;{x.max}
+                    {x.min === x.max ? x.min : <span>{x.min}&ndash;{x.max}</span>}
                   </td>
                   <td>
                     {x.letter}
@@ -115,6 +115,7 @@ function App() {
       <hr />
       <h6 className="text-center mb-3">Enter your marking period grades</h6>
       {renderInputs()}
+      <h6 className="text-center mb-3 mt-3">Results</h6>
       {haveValidGrades ? renderResultsCard() : renderWaitingCard()}
     </div>
   )
