@@ -33,8 +33,8 @@ function App() {
   const renderInputs = () =>
     [...Array(numPeriods).keys()]
       .map(x =>
-        <div key={x} className="row mb-1">
-          <div className="col-sm form-group mb-2">
+        <div key={x} className="row">
+          <div className="col-sm form-group mb-1">
             <input
               type="number"
               className="form-control mp"
@@ -53,31 +53,58 @@ function App() {
       </div>
     </div>
 
-
   const renderResults = () => {
     const { noFinal, possibilities } = data
-    console.log(noFinal)
-    console.log(possibilities)
+    const current = noFinal.letter
+    const best = possibilities[0].letter
+    const worst = possibilities[possibilities.length - 1].letter
+    if (best === worst)
+      return (
+        <p>Your overall grade for the course is <b>{noFinal.letter}</b>, and that <b>cannot be changed</b> by taking a final exam.</p>
+      )
+    return (
+      <>
+        <p>
+          If you <b>do not take</b> a final exam, your overall grade for the course will be <b>{noFinal.letter}</b>.
+        </p>
+        <p>
+          If you <b>do take</b> a final exam, your overall grade {best === current ? <span><b>cannot increase</b>, and </span> : null}will range from <b>{worst}</b> to <b>{best}</b>, as determined by your final exam score.
+        </p>
+        <table className="table text-center table-hover table-sm table-bordered">
+          <thead className="table-light">
+            <tr>
+              <th style={{ 'width': '50%' }}>Final Exam Score</th>
+              <th style={{ 'width': '50%' }}>Overall Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              possibilities.map(x => (
+                <tr key={x.letter}>
+                  <td>
+                    {x.min}&ndash;{x.max}
+                  </td>
+                  <td>
+                    {x.letter}
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </>
+    )
+  }
+
+  const renderResultsCard = () => {
     return (
       <>
         <div className="card mb-1">
           <div className="card-body">
-            {/* <h5 className="card-title text-center">Average with no final exam</h5> */}
             <div className="card-text">
-              If you do not take a final, your grade will be {noFinal.letter}.
+              {renderResults()}
             </div>
           </div>
         </div>
-        {
-          possibilities.map(x => (
-            <div key={x.letter} className="card mb-1">
-              <div className="card-body">
-                <div className="card-text">
-                  If you score between {x.min} and {x.max} on the final, your grade will be {x.letter}.
-                </div>
-              </div>
-            </div>
-          ))}
       </>
     )
   }
@@ -86,11 +113,11 @@ function App() {
     <div className="container mt-3" style={{ 'maxWidth': '550px' }}>
       {renderOptions()}
       <hr />
-      <h5 className="text-center mb-3">Enter marking period grades</h5>
+      <h6 className="text-center mb-3">Enter your marking period grades</h6>
       {renderInputs()}
-      {haveValidGrades ? renderResults() : renderWaitingCard()}
+      {haveValidGrades ? renderResultsCard() : renderWaitingCard()}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
