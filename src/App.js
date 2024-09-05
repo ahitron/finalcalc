@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { analysis } from './data'
 
 function App() {
-  const [numPeriods, setNumPeriods] = useState(2)
+  const [numPeriods, setNumPeriods] = useState(4)
   const [grades, setGrades] = useState(['', '', '', ''])
 
   const actualGrades = grades.slice(0, numPeriods)
